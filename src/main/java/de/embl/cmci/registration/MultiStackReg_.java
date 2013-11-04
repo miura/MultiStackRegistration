@@ -79,19 +79,8 @@ import ij.process.FloatProcessor;
 import ij.process.ImageConverter;
 import ij.process.ShortProcessor;
 
-// Java 1.1
-import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.Dialog;
 import java.awt.FileDialog;
-import java.awt.FlowLayout;
 import java.awt.Frame;
-import java.awt.Insets;
-import java.awt.Label;
-import java.awt.Panel;
-import java.awt.TextArea;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.IndexColorModel;
 import java.io.FileReader;
 import java.io.FileNotFoundException;
@@ -117,12 +106,12 @@ public class MultiStackReg_
 	Private global variables
 ....................................................................*/
 private static final double TINY = (double)Float.intBitsToFloat((int)0x33FFFFFF);
-private String loadPathAndFilename;
-private String savePath;
+private String loadPathAndFilename = "";
+private String savePath = "";
 private String saveFile;
 private String loadPath;
 private String loadFile;
-private int transformNumber;
+private int transformNumber = 0;
 private int tSlice;
 private int transformation;
 private boolean saveTransform;
@@ -141,9 +130,9 @@ private String tgtAction;
 
 /********************************************************************/
 public void run ( final String arg) {
-	loadPathAndFilename="";
-	savePath="";
-	transformNumber=0;
+	//loadPathAndFilename="";
+	//savePath="";
+	//transformNumber=0;
 	Runtime.getRuntime().gc();
 	
 	final ImagePlus[] admissibleImageList = createAdmissibleImageList();
@@ -237,7 +226,7 @@ public void run ( final String arg) {
     loadFile="None";
     
     if (viewManual){ //they just want to read the manual.  Do so and quit.
-        final multiStackRegCredits dialog = new multiStackRegCredits(IJ.getInstance());
+        final MultiStackRegCredits dialog = new MultiStackRegCredits(IJ.getInstance());
 		GUI.center(dialog);
 		dialog.setVisible(true);
         return;
@@ -248,6 +237,10 @@ public void run ( final String arg) {
         IJ.error("Both stacks appear to be ignored.\nI'm... just gonna quit, then.");
         return;
     }
+    core(srcFile, tgtFile);
+}
+    
+public void core(String srcFile, String tgtFile){    
     
     if (srcImg != null && (srcAction=="Ignore" || srcAction=="Use as Reference") && 
         tgtImg != null && tgtAction=="Load Transformation File"){
@@ -2472,6 +2465,42 @@ public void setViewManual(boolean viewManual) {
  */
 public void setLoadFile(String loadFile) {
 	this.loadFile = loadFile;
+}
+
+
+
+/**
+ * @param loadPath the loadPath to set
+ */
+public void setLoadPath(String loadPath) {
+	this.loadPath = loadPath;
+}
+
+
+
+/**
+ * @param twoStackAlign the twoStackAlign to set
+ */
+public void setTwoStackAlign(boolean twoStackAlign) {
+	this.twoStackAlign = twoStackAlign;
+}
+
+
+
+/**
+ * @param saveFile the saveFile to set
+ */
+public void setSaveFile(String saveFile) {
+	this.saveFile = saveFile;
+}
+
+
+
+/**
+ * @param savePath the savePath to set
+ */
+public void setSavePath(String savePath) {
+	this.savePath = savePath;
 }
 
 } /* end class StackReg_ */

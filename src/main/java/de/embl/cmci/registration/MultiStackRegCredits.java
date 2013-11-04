@@ -21,6 +21,11 @@ public class MultiStackRegCredits extends Dialog { /* begin class multiStackRegC
 		Public methods
 	....................................................................*/
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/********************************************************************/
 	public Insets getInsets (
 	) {
@@ -28,9 +33,7 @@ public class MultiStackRegCredits extends Dialog { /* begin class multiStackRegC
 	} /* end getInsets */
 
 	/********************************************************************/
-	public MultiStackRegCredits (
-		final Frame parentWindow
-	) {
+	public MultiStackRegCredits ( final Frame parentWindow) {
 		super(parentWindow, "StackReg", true);
 		setLayout(new BorderLayout(0, 20));
 		final Label separation = new Label("");
