@@ -16,7 +16,7 @@
 	<version>1.46.0</version>
 
 	<name>plugins/MultiStackRegistration_.jar</name>
-	<description>A Maven project implementing an ImageJ 1.x plugin</description>
+	<description>A Maven project implementing an ImageJ 1.x plugin. MultiStackRegistration plugin written by Brad Busse.</description>
 
 	<dependencies>
 		<dependency>
