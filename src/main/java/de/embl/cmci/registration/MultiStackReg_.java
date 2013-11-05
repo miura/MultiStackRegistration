@@ -135,6 +135,12 @@ public void run ( final String arg) {
 	//transformNumber=0;
 	Runtime.getRuntime().gc();
 	
+	ImagePlus imp = WindowManager.getCurrentImage();
+	if (imp == null) {
+		IJ.error("No image available");
+		return;
+	}
+
 	final ImagePlus[] admissibleImageList = createAdmissibleImageList();
 	final String[] sourceNames = new String[1+admissibleImageList.length];
     sourceNames[0]="None";
@@ -148,100 +154,108 @@ public void run ( final String arg) {
 	for (int k = 0; (k < admissibleImageList.length); k++) {
 		targetNames[k+1]=admissibleImageList[k].getTitle();
 	}
-	
-	ImagePlus imp = WindowManager.getCurrentImage();
-	if (imp == null) {
-		IJ.error("No image available");
-		return;
-	}
 
-    //if there are no grayscale images, just quit
-    if (admissibleImageList.length == 0) return;
-	
-    final String[] sourceAction = {
-        "Ignore",
-        "Align",
-        "Use as Reference",
-        "Load Transformation File"
-    };
-    
-    final String[] targetAction = {
-        "Ignore",
-        "Align to First Stack",
-        "Load Transformation File"
-    };
-    
-	final String[] transformationItem = {
-		"Translation",
-		"Rigid Body",
-		"Scaled Rotation",
+  //if there are no grayscale images, just quit
+  if (admissibleImageList.length == 0) return;
+
+  final String[] sourceAction = {
+    "Ignore",
+    "Align",
+    "Use as Reference",
+    "Load Transformation File"
+  };
+
+  final String[] targetAction = {
+    "Ignore",
+    "Align to First Stack",
+    "Load Transformation File"
+  };
+
+  final String[] transformationItem = {
+    "Translation",
+    "Rigid Body",
+    "Scaled Rotation",
 		"Affine"
 		//"Load Transformation File"
 	};
 	
-	GenericDialog gd = new GenericDialog("MultiStackReg");
-	gd.addChoice("Stack_1:", sourceNames, admissibleImageList[0].getTitle());
-    gd.addChoice("Action_1:",sourceAction,"Align");
-    gd.addStringField("File_1 (optional):","",20);
-    gd.addMessage("");
-	gd.addChoice("Stack_2:", targetNames, "None");
-    gd.addChoice("Action_2:",targetAction,"Ignore");
-    gd.addStringField("File_2 (optional):","",20);
-    gd.addMessage("");
-	gd.addChoice("Transformation:", transformationItem, "Rigid Body");
-	//gd.addCheckbox("Align Second Stack To First", false);
-	gd.addCheckbox("Save Transformation File", false);
-	gd.addCheckbox("View Manual Instead", false);
-    
-	gd.showDialog();
-	if (gd.wasCanceled()) {
-		return;
-	}
+  GenericDialog gd = new GenericDialog("MultiStackReg");
+  gd.addChoice("Stack_1:", sourceNames, admissibleImageList[0].getTitle());
+  gd.addChoice("Action_1:",sourceAction,"Align");
+  gd.addStringField("File_1 (optional):","",20);
+  gd.addMessage("");
+  gd.addChoice("Stack_2:", targetNames, "None");
+  gd.addChoice("Action_2:",targetAction,"Ignore");
+  gd.addStringField("File_2 (optional):","",20);
+  gd.addMessage("");
+  gd.addChoice("Transformation:", transformationItem, "Rigid Body");
+  //gd.addCheckbox("Align Second Stack To First", false);
+  gd.addCheckbox("Save Transformation File", false);
+  gd.addCheckbox("View Manual Instead", false);
 
-    int tmpIndex=gd.getNextChoiceIndex();
-    srcImg=null;
-    if (tmpIndex > 0){
-        srcImg = admissibleImageList[tmpIndex-1];
-    }
-    srcAction=sourceAction[gd.getNextChoiceIndex()];
-    String srcFile=gd.getNextString();
-    
-    tmpIndex=gd.getNextChoiceIndex();
-    tgtImg=null;
-    if (tmpIndex > 0){
-        tgtImg = admissibleImageList[tmpIndex-1];
-    }
-    tgtAction=targetAction[gd.getNextChoiceIndex()];
-    String tgtFile=gd.getNextString();
-    
-	imp=srcImg;
-	transformation = gd.getNextChoiceIndex();
-	//twoStackAlign = gd.getNextBoolean();
-    saveTransform = gd.getNextBoolean();
-    viewManual=gd.getNextBoolean();
-    
-    //We've read all the values in.  Let's try to figure out what the user wants us to do.
-    twoStackAlign=false;
-    loadPath="";
-    loadFile="None";
-    
-    if (viewManual){ //they just want to read the manual.  Do so and quit.
-        final MultiStackRegCredits dialog = new MultiStackRegCredits(IJ.getInstance());
-		GUI.center(dialog);
-		dialog.setVisible(true);
-        return;
-    }
-    
-    if ((srcImg==null || srcAction=="Ignore") && (tgtImg==null || tgtAction=="Ignore")){
-        //the user has deselected both stacks.  Ask what's up and quit.
-        IJ.error("Both stacks appear to be ignored.\nI'm... just gonna quit, then.");
-        return;
-    }
-    core(srcFile, tgtFile);
+  gd.showDialog();
+  if (gd.wasCanceled()) {
+    return;
+  }
+
+  int tmpIndex=gd.getNextChoiceIndex();
+  srcImg=null;
+  if (tmpIndex > 0){
+    srcImg = admissibleImageList[tmpIndex-1];
+  }
+  srcAction=sourceAction[gd.getNextChoiceIndex()];
+  String srcFile=gd.getNextString();
+
+  tmpIndex=gd.getNextChoiceIndex();
+  tgtImg=null;
+  if (tmpIndex > 0){
+    tgtImg = admissibleImageList[tmpIndex-1];
+  }
+  tgtAction=targetAction[gd.getNextChoiceIndex()];
+  String tgtFile=gd.getNextString();
+
+  imp=srcImg;
+  transformation = gd.getNextChoiceIndex();
+  //twoStackAlign = gd.getNextBoolean();
+  saveTransform = gd.getNextBoolean();
+  viewManual=gd.getNextBoolean();
+
+  //We've read all the values in.  Let's try to figure out what the user wants us to do.
+  twoStackAlign=false;
+  loadPath="";
+  loadFile="None";
+
+  if (viewManual){ //they just want to read the manual.  Do so and quit.
+    final MultiStackRegCredits dialog = new MultiStackRegCredits(IJ.getInstance());
+    GUI.center(dialog);
+    dialog.setVisible(true);
+    return;
+  }
+
+  if ((srcImg==null || srcAction=="Ignore") && (tgtImg==null || tgtAction=="Ignore")){
+    //the user has deselected both stacks.  Ask what's up and quit.
+    IJ.error("Both stacks appear to be ignored.\nI'm... just gonna quit, then.");
+    return;
+  }
+  core(srcFile, tgtFile);
 }
-    
+
+/**
+ *  srcFile: full path to a text file, 
+ *    (1) If "Align" or "As Reference" is selected and save transformation is checked, 
+ *        transformation will be logged.
+ *    (2) If "As Reference" is selected and srcFile=="", then a dummy text file is created. 
+ *    (3) If "Load Transformation file" is selected, this file will be the reference.
+ *        If srfFile =="", then a dialog pops up. 
+ *  tgtFile: full path to a textfile,
+ *    (1) If "Align to first stack" is selected, then srcFile or dummy file is referred for transformation. 
+ *    (2) If "Load Transformation File" is selected, then tgtFile will be the reference for transformation.
+ *        If tgtFile=="", then diaplog pops up. 
+ *
+ *  
+ */
 public void core(String srcFile, String tgtFile){    
-    
+
     if (srcImg != null && (srcAction=="Ignore" || srcAction=="Use as Reference") && 
         tgtImg != null && tgtAction=="Load Transformation File"){
         //we're not doing anything with our source image,  but the user wants to load a file on the second.  *shrug* Do it, I guess.
@@ -360,8 +374,8 @@ public void core(String srcFile, String tgtFile){
 
 
 
-/*....................................................................
-	Private methods
+/**....................................................................
+ *
 ....................................................................*/
 public int processDirectives(ImagePlus imp, boolean loadBool){
 	if (twoStackAlign && !loadBool){ //we want to do two-stack alignment, check that the stacks are compatible
