@@ -17,23 +17,24 @@ Modified version of MultiStackRegistration, for use from scripts.
 Welcome to MultiStackReg v1.4!
 
 This plugin has three modes of use:
-1) Align a single stack of images
-2) Align a stack to another stack
-3) Load a previously created transformation file
+
+1. Align a single stack of images
+2. Align a stack to another stack
+3. Load a previously created transformation file
 
 
-To align a single stack:
+###To align a single stack:
 
 Choose the image to be aligned in the Stack 1 dropdown box.
 Leave 'Align' in the Action 1 box.
 
 
-To align two stacks:
+###To align two stacks:
 
 Place the reference stack in Stack 1's box, and the stack to be aligned in Stack 2's box.  Select 'Use as Reference' as Action 1 and 'Align to First Stack' as Action 2.
 
 
-To load a transformation file:
+###To load a transformation file:
 
 Place the stack to be aligned in either stack box, choose 'Load Transformation File' in its Action dropdown box. The File field can be used as a shortcut to avoid having to select the matrix manually.
 
