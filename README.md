@@ -17,6 +17,7 @@ Modified version of MultiStackRegistration, for use from scripts.
   * <http://imagej.org> 
 * TurboReg (Bundled in Fiji)
   * <http://bigwww.epfl.ch/thevenaz/turboreg/>
+
 ##Usage
 
 Welcome to MultiStackReg v1.4!
