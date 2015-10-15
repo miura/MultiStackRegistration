@@ -125,10 +125,21 @@ private String srcAction;
 private String tgtAction;
 
 /*....................................................................
+	Public global variables
+....................................................................*/
+
+public static final int TRANSLATION = 0;
+public static final int RIGID_BODY = 1;
+public static final int SCALED_ROTATION = 2;
+public static final int AFFINE = 3;
+
+/*....................................................................
 	Public methods
 ....................................................................*/
 
-/********************************************************************/
+/*******************************************************************
+ * {@link ij.ImagePlus}
+ * */
 public void run ( final String arg) {
 	//loadPathAndFilename="";
 	//savePath="";
@@ -421,14 +432,14 @@ public int processDirectives(ImagePlus imp, boolean loadBool){
 	};
 	double[][] anchorPoints = null;
 	switch (transformation) {
-		case 0: {
+		case AFFINE: {
 			anchorPoints = new double[1][3];
 			anchorPoints[0][0] = (double)(width / 2);
 			anchorPoints[0][1] = (double)(height / 2);
 			anchorPoints[0][2] = 1.0;
 			break;
 		}
-		case 1: {
+		case RIGID_BODY: {
 			anchorPoints = new double[3][3];
 			anchorPoints[0][0] = (double)(width / 2);
 			anchorPoints[0][1] = (double)(height / 2);
@@ -441,7 +452,7 @@ public int processDirectives(ImagePlus imp, boolean loadBool){
 			anchorPoints[2][2] = 1.0;
 			break;
 		}
-		case 2: {
+		case SCALED_ROTATION: {
 			anchorPoints = new double[2][3];
 			anchorPoints[0][0] = (double)(width / 4);
 			anchorPoints[0][1] = (double)(height / 2);
@@ -451,7 +462,7 @@ public int processDirectives(ImagePlus imp, boolean loadBool){
 			anchorPoints[1][2] = 1.0;
 			break;
 		}
-		case 3: {
+		case TRANSLATION: {
 			anchorPoints = new double[3][3];
 			anchorPoints[0][0] = (double)(width / 2);
 			anchorPoints[0][1] = (double)(height / 4);
@@ -2460,6 +2471,9 @@ public void setTgtAction(String tgtAction) {
 	this.tgtAction = tgtAction;
 }
 
+/**
+ * Use field values for setting the translformation type. 
+ */
 public void setTransformation(int transformation) {
 	this.transformation = transformation;
 }
