@@ -2,13 +2,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-		http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<!--<groupId>org.scijava</groupId>-->
-		<!--<artifactId>pom-scijava</artifactId>-->
-		<!--<version>8.3.0</version>-->
 		<groupId>net.imagej</groupId>
 		<artifactId>pom-imagej</artifactId>
 		<version>7.0.0</version>
@@ -22,32 +19,29 @@
 
 	<name>plugins/MultiStackRegistration_.jar</name>
 	<description>A Maven project implementing an ImageJ 1.x plugin. MultiStackRegistration plugin written by Brad Busse.</description>
-
+	<scm>
+		<connection>scm:git:git://github.com/cmci/MultiStackRegistration</connection>
+		<developerConnection>scm:git:git@github.com:cmci/MultiStackRegistration</developerConnection>
+		<tag>HEAD</tag>
+		<url>https://github.com/cmci/MultiStackRegistration</url>
+	</scm>
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/cmci/MultiStackRegistration</url>
+	</issueManagement>
+	<properties>
+		<scijava.jvm.version>1.8</scijava.jvm.version>
+	</properties>	
 	<dependencies>
 		<dependency>
 			<groupId>net.imagej</groupId>
 			<artifactId>ij</artifactId>
-			<version>${imagej1.version}</version>
+<!-- 			<version>${imagej1.version}</version> -->
 		</dependency>
 	</dependencies>
 
 	<build>
-		<resources>
-			<resource>
-				<directory>${basedir}/src/main/resources</directory>
-			</resource>
-			<resource>
-				<directory>${project.build.sourceDirectory}</directory>
-			</resource>
-		</resources>
-		<testResources>
-			<testResource>
-				<directory>${basedir}/src/test/resources</directory>
-			</testResource>
-			<testResource>
-				<directory>${project.build.testSourceDirectory}</directory>
-			</testResource>
-		</testResources>
+
 		<plugins>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -68,38 +62,32 @@
 
 	<developers>
 		<developer>
-			<id>kota</id>
-			<name>Kota Miura</name>
-			<email>miura@embl.de</email>
-      <url>http://cmci.embl.de/</url>
-			<organization>EMBL Heidelberg</organization>
-			<organizationUrl>http://www.embl.de/</organizationUrl>
+			<name>Brad Busse</name>
+			<email>bbusse@stanford.edu</email>
+			<url>http://bradbusse.net/downloads.html</url>
 			<roles>
 				<role>developer</role>
 			</roles>
+		</developer>
+
+		<developer>
+			<id>kota</id>
+			<name>Kota Miura</name>
+			<email>miura@embl.de</email>
+			<url>http://cmci.embl.de/</url>
+			<organization>EMBL Heidelberg</organization>
+			<organizationUrl>http://www.embl.de/</organizationUrl>
+			<roles>
+				<role>contributor</role>
+			</roles>
 			<timezone>+1</timezone>
 		</developer>
-  </developers>
-
-	<!-- NB: for project parent -->
+	</developers>
 	<repositories>
+		<!-- NB: for project parent -->
 		<repository>
-			<id>imagej.releases</id>
-			<url>http://maven.imagej.net/content/repositories/releases</url>
-		</repository>
-		<repository>
-			<id>imagej.snapshots</id>
-			<url>http://maven.imagej.net/content/repositories/snapshots</url>
+			<id>imagej.public</id>
+			<url>http://maven.imagej.net/content/groups/public</url>
 		</repository>
 	</repositories>
-
-  <!--
-	<scm>
-		<connection>scm:git:git://github.com/imagej/minimal-ij1-plugin</connection>
-		<developerConnection>scm:git:git@github.com:imagej/minimal-ij1-plugin</developerConnection>
-		<tag>HEAD</tag>
-		<url>https://github.com/imagej/minimal-ij1-plugin</url>
-	</scm>
-  -->
-
 </project>
