@@ -27,7 +27,7 @@
 	</scm>
 	<issueManagement>
 		<system>GitHub Issues</system>
-		<url>https://github.com/cmci/MultiStackRegistration</url>
+		<url>https://github.com/cmci/MultiStackRegistration/issues</url>
 	</issueManagement>
 	<properties>
 		<scijava.jvm.version>1.8</scijava.jvm.version>
