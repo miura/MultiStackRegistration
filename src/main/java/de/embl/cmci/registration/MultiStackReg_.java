@@ -90,6 +90,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Stack;
+import java.util.UUID;
 
 /*====================================================================
 |	StackReg_
@@ -1626,10 +1627,10 @@ private ImagePlus registerSlice (
 			}
 		}
 		final FileSaver sourceFile = new FileSaver(source);
-		final String sourcePathAndFileName = IJ.getDirectory("temp") + source.getTitle();
+		final String sourcePathAndFileName = IJ.getDirectory("temp") + UUID.randomUUID().toString() + source.getTitle();
 		sourceFile.saveAsTiff(sourcePathAndFileName);
 		final FileSaver targetFile = new FileSaver(target);
-		final String targetPathAndFileName = IJ.getDirectory("temp") + target.getTitle();
+		final String targetPathAndFileName = IJ.getDirectory("temp") + UUID.randomUUID().toString() + target.getTitle();
 		targetFile.saveAsTiff(targetPathAndFileName);
 		if (loadPathAndFilename==""){//if we've specified a transformation to load, we needen't bother with aligning them again
 			switch (transformation) {
@@ -1767,13 +1768,13 @@ private ImagePlus registerSlice (
 				ImagePlus transformedSourceG = null;
 				ImagePlus transformedSourceB = null;
 				final FileSaver sourceFileR = new FileSaver(sourceR);
-				final String sourcePathAndFileNameR = IJ.getDirectory("temp") + sourceR.getTitle();
+				final String sourcePathAndFileNameR = IJ.getDirectory("temp") + UUID.randomUUID().toString() + sourceR.getTitle();
 				sourceFileR.saveAsTiff(sourcePathAndFileNameR);
 				final FileSaver sourceFileG = new FileSaver(sourceG);
-				final String sourcePathAndFileNameG = IJ.getDirectory("temp") + sourceG.getTitle();
+				final String sourcePathAndFileNameG = IJ.getDirectory("temp") + UUID.randomUUID().toString() + sourceG.getTitle();
 				sourceFileG.saveAsTiff(sourcePathAndFileNameG);
 				final FileSaver sourceFileB = new FileSaver(sourceB);
-				final String sourcePathAndFileNameB = IJ.getDirectory("temp") + sourceB.getTitle();
+				final String sourcePathAndFileNameB = IJ.getDirectory("temp") + UUID.randomUUID().toString() + sourceB.getTitle();
 				sourceFileB.saveAsTiff(sourcePathAndFileNameB);
 				switch (transformation) {
 					case 0: {
@@ -2032,13 +2033,13 @@ private ImagePlus registerSlice (
 				ImagePlus transformedSourceG = null;
 				ImagePlus transformedSourceB = null;
 				final FileSaver sourceFileR = new FileSaver(sourceR);
-				final String sourcePathAndFileNameR = IJ.getDirectory("temp") + sourceR.getTitle();
+				final String sourcePathAndFileNameR = IJ.getDirectory("temp") + UUID.randomUUID().toString() + sourceR.getTitle();
 				sourceFileR.saveAsTiff(sourcePathAndFileNameR);
 				final FileSaver sourceFileG = new FileSaver(sourceG);
-				final String sourcePathAndFileNameG = IJ.getDirectory("temp") + sourceG.getTitle();
+				final String sourcePathAndFileNameG = IJ.getDirectory("temp") + UUID.randomUUID().toString() + sourceG.getTitle();
 				sourceFileG.saveAsTiff(sourcePathAndFileNameG);
 				final FileSaver sourceFileB = new FileSaver(sourceB);
-				final String sourcePathAndFileNameB = IJ.getDirectory("temp") + sourceB.getTitle();
+				final String sourcePathAndFileNameB = IJ.getDirectory("temp") + UUID.randomUUID().toString() + sourceB.getTitle();
 				sourceFileB.saveAsTiff(sourcePathAndFileNameB);
 				switch (transformation) {
 					case 0: {
