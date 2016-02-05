@@ -1578,6 +1578,7 @@ private void QRdecomposition (
 } /* end QRdecomposition */
 
 /*------------------------------------------------------------------*/
+@SuppressWarnings({ "rawtypes", "rawtypes" })
 private ImagePlus registerSlice (
 	ImagePlus source,
 	ImagePlus target,
