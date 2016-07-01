@@ -237,6 +237,7 @@ public void run ( final String arg) {
   loadPath="";
   loadFile="None";
 
+  //@TODO show help with a help button, rather than a radio button. 
   if (viewManual){ //they just want to read the manual.  Do so and quit.
     final MultiStackRegCredits dialog = new MultiStackRegCredits(IJ.getInstance());
     GUI.center(dialog);
@@ -433,14 +434,14 @@ public int processDirectives(ImagePlus imp, boolean loadBool){
 	};
 	double[][] anchorPoints = null;
 	switch (transformation) {
-		case AFFINE: {
+		case TRANSLATION: {	//AFFINE: { //should be three points, not one. 
 			anchorPoints = new double[1][3];
 			anchorPoints[0][0] = (double)(width / 2);
 			anchorPoints[0][1] = (double)(height / 2);
 			anchorPoints[0][2] = 1.0;
 			break;
 		}
-		case RIGID_BODY: {
+		case RIGID_BODY: { //three points
 			anchorPoints = new double[3][3];
 			anchorPoints[0][0] = (double)(width / 2);
 			anchorPoints[0][1] = (double)(height / 2);
@@ -453,7 +454,7 @@ public int processDirectives(ImagePlus imp, boolean loadBool){
 			anchorPoints[2][2] = 1.0;
 			break;
 		}
-		case SCALED_ROTATION: {
+		case SCALED_ROTATION: { //two points
 			anchorPoints = new double[2][3];
 			anchorPoints[0][0] = (double)(width / 4);
 			anchorPoints[0][1] = (double)(height / 2);
@@ -463,7 +464,7 @@ public int processDirectives(ImagePlus imp, boolean loadBool){
 			anchorPoints[1][2] = 1.0;
 			break;
 		}
-		case TRANSLATION: {
+		case AFFINE: {//TRANSLATION: { //should be one point, not three. 
 			anchorPoints = new double[3][3];
 			anchorPoints[0][0] = (double)(width / 2);
 			anchorPoints[0][1] = (double)(height / 4);
@@ -1578,7 +1579,7 @@ private void QRdecomposition (
 } /* end QRdecomposition */
 
 /*------------------------------------------------------------------*/
-@SuppressWarnings({ "rawtypes", "rawtypes" })
+@SuppressWarnings({ })
 private ImagePlus registerSlice (
 	ImagePlus source,
 	ImagePlus target,
@@ -2351,10 +2352,16 @@ private ImagePlus registerSlice (
 							sourcePoints[0][i] = 0.0;
 							sourcePoints[1][i] = 0.0;
 							sourcePoints[2][i] = 0.0;
+							IJ.log("sourcePoints rows:" + Integer.toString(sourcePoints.length));
+							IJ.log("sourcePoints cols:" + Integer.toString(sourcePoints[0].length));
+							IJ.log("globalTransform rows:" + Integer.toString(globalTransform.length));
+							IJ.log("globalTransform cols:" + Integer.toString(globalTransform[0].length));
+							IJ.log("anchorPoints rows:" + Integer.toString(anchorPoints.length));
+							IJ.log("anchorPoints cols:" + Integer.toString(anchorPoints[0].length));
 							for (int j = 0; (j < 3); j++) {
 								sourcePoints[0][i] += globalTransform[i][j]
 									* anchorPoints[0][j];
-								sourcePoints[1][i] += globalTransform[i][j]
+								sourcePoints[1][i] += globalTransform[i][j] //java.lang.ArrayIndexOutOfBoundsException: 1
 									* anchorPoints[1][j];
 								sourcePoints[2][i] += globalTransform[i][j]
 									* anchorPoints[2][j];
@@ -2531,6 +2538,19 @@ public void setSaveFile(String saveFile) {
  */
 public void setSavePath(String savePath) {
 	this.savePath = savePath;
+}
+
+public static void main(String[] args) {
+	MultiStackReg_ msr = new MultiStackReg_();
+	ImagePlus srcimp = new ImagePlus("/Users/miura/Dropbox/sampleImages/RegistrationExample/translation/MAX_reference.tif");
+	ImagePlus tgtimp = new ImagePlus("/Users/miura/Dropbox/sampleImages/RegistrationExample/translation/MAX_30-pixel-translation-along-x.tif");
+	msr.setSrcImg(srcimp);
+	msr.setTgtImg(tgtimp);
+	msr.setSrcAction("Use as Reference");
+	msr.setTgtAction("Align to First Stack");
+	msr.setTransformation(0);
+	msr.setSaveTransform(true);
+	msr.core("", "");
 }
 
 } /* end class StackReg_ */
