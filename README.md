@@ -8,8 +8,8 @@ Modified version of MultiStackRegistration, for use from scripts.
 * Brad Busse (Designer, Developer, - v 1.45)
   * bbusse@stanford.edu 
 * Kota Miura (Minor upgrades, v1.46)
-  * Mavenized, Scripting enabled. 
-  * miura@embl.de	
+  * Mavenized, Scripting enabled, bug fixing. 
+  * miura@cmci.info	
 
 ##Dependencies
 
