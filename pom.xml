@@ -8,14 +8,14 @@
 	<parent>
 		<groupId>net.imagej</groupId>
 		<artifactId>pom-imagej</artifactId>
-		<version>7.0.0</version>
+		<version>16.6.0</version>
 		<relativePath />		
 	</parent>
 
 
 	<groupId>de.embl.cmci</groupId>
 	<artifactId>MultiStackRegistration_</artifactId>
-	<version>1.46.1</version>
+	<version>1.46.2</version>
 
 	<name>plugins/MultiStackRegistration_.jar</name>
 	<description>A Maven project implementing an ImageJ 1.x plugin. MultiStackRegistration plugin written by Brad Busse.</description>
