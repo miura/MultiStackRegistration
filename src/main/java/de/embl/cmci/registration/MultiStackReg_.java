@@ -63,6 +63,9 @@ package de.embl.cmci.registration;
  * (  bbusse@stanford.edu ) and released into the public domain, so go by
  * their ^^ guidelines for distribution, etc.
  */
+/* Modified for scripting and minor debuggings, over the release by Brad Busse. 
+ * Kota Miura <miura@cmci.info>
+ */
 
 // ImageJ
 import ij.IJ;
