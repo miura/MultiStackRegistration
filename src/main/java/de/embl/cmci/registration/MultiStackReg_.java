@@ -63,6 +63,9 @@ package de.embl.cmci.registration;
  * (  bbusse@stanford.edu ) and released into the public domain, so go by
  * their ^^ guidelines for distribution, etc.
  */
+/* Modified for scripting and minor debuggings, over the release by Brad Busse. 
+ * Kota Miura <miura@cmci.info>
+ */
 
 // ImageJ
 import ij.IJ;
@@ -82,6 +85,8 @@ import ij.process.ShortProcessor;
 import java.awt.FileDialog;
 import java.awt.Frame;
 import java.awt.image.IndexColorModel;
+import java.nio.file.Files;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -91,6 +96,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Stack;
 import java.util.UUID;
+import java.lang.SecurityException;
 
 /*====================================================================
   |	StackReg_
@@ -133,6 +139,14 @@ public class MultiStackReg_
 	public static final int RIGID_BODY = 1;
 	public static final int SCALED_ROTATION = 2;
 	public static final int AFFINE = 3;
+
+	/* path keepers for deleteing them afterwards */
+
+	String CsourcePathAndFileNameR = "";
+	String CsourcePathAndFileNameG = "";
+	String CsourcePathAndFileNameB = "";
+	String CsourcePathAndFileName = "";
+	String CtargetPathAndFileName = "";
 
 	/*....................................................................
 	  Public methods
@@ -1631,9 +1645,12 @@ public class MultiStackReg_
 						final FileSaver sourceFile = new FileSaver(source);
 						final String sourcePathAndFileName = IJ.getDirectory("temp") + UUID.randomUUID().toString() + source.getTitle();
 						sourceFile.saveAsTiff(sourcePathAndFileName);
+						CsourcePathAndFileName = sourcePathAndFileName;
 						final FileSaver targetFile = new FileSaver(target);
 						final String targetPathAndFileName = IJ.getDirectory("temp") + UUID.randomUUID().toString() + target.getTitle();
 						targetFile.saveAsTiff(targetPathAndFileName);
+						CtargetPathAndFileName = targetPathAndFileName;
+
 						if (loadPathAndFilename==""){//if we've specified a transformation to load, we needen't bother with aligning them again
 							switch (transformation) {
 								case 0: {
@@ -1700,6 +1717,7 @@ public class MultiStackReg_
 								}
 								default: {
 											 IJ.error("Unexpected transformation");
+											 deleteTempFiles();
 											 return(null);
 								}
 							}
@@ -1772,12 +1790,18 @@ public class MultiStackReg_
 														  final FileSaver sourceFileR = new FileSaver(sourceR);
 														  final String sourcePathAndFileNameR = IJ.getDirectory("temp") + UUID.randomUUID().toString() + sourceR.getTitle();
 														  sourceFileR.saveAsTiff(sourcePathAndFileNameR);
+														  CsourcePathAndFileNameR = sourcePathAndFileNameR;
+
 														  final FileSaver sourceFileG = new FileSaver(sourceG);
 														  final String sourcePathAndFileNameG = IJ.getDirectory("temp") + UUID.randomUUID().toString() + sourceG.getTitle();
 														  sourceFileG.saveAsTiff(sourcePathAndFileNameG);
+														  CsourcePathAndFileNameG = sourcePathAndFileNameG;
+
 														  final FileSaver sourceFileB = new FileSaver(sourceB);
 														  final String sourcePathAndFileNameB = IJ.getDirectory("temp") + UUID.randomUUID().toString() + sourceB.getTitle();
 														  sourceFileB.saveAsTiff(sourcePathAndFileNameB);
+														  CsourcePathAndFileNameB = sourcePathAndFileNameB;
+
 														  switch (transformation) {
 															  case 0: {
 																		  sourcePoints = new double[1][3];
@@ -1978,6 +2002,7 @@ public class MultiStackReg_
 															  }
 															  default: {
 																		   IJ.error("Unexpected transformation");
+																		   deleteTempFiles();
 																		   return(null);
 															  }
 														  }
@@ -2037,12 +2062,18 @@ public class MultiStackReg_
 														  final FileSaver sourceFileR = new FileSaver(sourceR);
 														  final String sourcePathAndFileNameR = IJ.getDirectory("temp") + UUID.randomUUID().toString() + sourceR.getTitle();
 														  sourceFileR.saveAsTiff(sourcePathAndFileNameR);
+														  CsourcePathAndFileNameR = sourcePathAndFileNameR;
+
 														  final FileSaver sourceFileG = new FileSaver(sourceG);
 														  final String sourcePathAndFileNameG = IJ.getDirectory("temp") + UUID.randomUUID().toString() + sourceG.getTitle();
 														  sourceFileG.saveAsTiff(sourcePathAndFileNameG);
+														  CsourcePathAndFileNameG = sourcePathAndFileNameG;
+
 														  final FileSaver sourceFileB = new FileSaver(sourceB);
 														  final String sourcePathAndFileNameB = IJ.getDirectory("temp") + UUID.randomUUID().toString() + sourceB.getTitle();
 														  sourceFileB.saveAsTiff(sourcePathAndFileNameB);
+														  CsourcePathAndFileNameB = sourcePathAndFileNameB;
+
 														  switch (transformation) {
 															  case 0: {
 																		  sourcePoints = new double[1][3];
@@ -2243,6 +2274,7 @@ public class MultiStackReg_
 															  }
 															  default: {
 																		   IJ.error("Unexpected transformation");
+																		   deleteTempFiles();
 																		   return(null);
 															  }
 														  }
@@ -2383,6 +2415,7 @@ public class MultiStackReg_
 														   }
 														   default: {
 																		IJ.error("Unexpected transformation");
+																		deleteTempFiles();
 																		return(null);
 														   }
 													   }
@@ -2410,6 +2443,7 @@ public class MultiStackReg_
 														   }
 														   default: {
 																		IJ.error("Unexpected image type");
+																		deleteTempFiles();
 																		return(null);
 														   }
 													   }
@@ -2418,6 +2452,7 @@ public class MultiStackReg_
 							}
 							default: {
 										 IJ.error("Unexpected image type");
+										 deleteTempFiles();
 										 return(null);
 							}
 						}
@@ -2434,6 +2469,8 @@ public class MultiStackReg_
 						IJ.error("Please download TurboReg_ from\nhttp://bigwww.epfl.ch/thevenaz/turboreg/");
 						return(null);
 					}
+
+					deleteTempFiles();
 					return(source);
 						} /* end registerSlice */
 
@@ -2538,6 +2575,38 @@ public class MultiStackReg_
 			 */
 			public void setSavePath(String savePath) {
 				this.savePath = savePath;
+			}
+
+			void deleteTempFiles(){
+				if (CsourcePathAndFileNameR != ""){
+					deleteAfile( CsourcePathAndFileNameR );
+				}
+				if (CsourcePathAndFileNameG != ""){
+					deleteAfile( CsourcePathAndFileNameG );
+				}
+				if (CsourcePathAndFileNameB != ""){
+					deleteAfile( CsourcePathAndFileNameB );
+				}
+				if (CsourcePathAndFileName != ""){
+					deleteAfile( CsourcePathAndFileName );
+				}
+				if (CtargetPathAndFileName != ""){
+					deleteAfile( CtargetPathAndFileName );
+				}
+
+			}
+			boolean deleteAfile(String filepath){
+				//Files.deleteIfExists( filepath ); // > java1.7
+				File f = new File( filepath );
+				if ( f.exists() ) {
+					try {
+						f.delete();
+					} catch (SecurityException e){
+						IJ.error("Temp file deleting failed, security exception" + e);
+						return false;
+					}
+				}
+				return true;
 			}
 
 			public static void main(String[] args) {
