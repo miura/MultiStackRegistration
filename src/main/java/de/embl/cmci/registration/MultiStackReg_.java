@@ -1790,17 +1790,19 @@ public class MultiStackReg_
 							source = new ImagePlus("StackRegSource", imp.getProcessor());
 						}
 					}
-					final FileSaver sourceFile = new FileSaver(source);
-					final String sourcePathAndFileName = IJ.getDirectory("temp") + UUID.randomUUID().toString() + source.getTitle();
-					sourceFile.saveAsTiff(sourcePathAndFileName);
-					CsourcePathAndFileName = sourcePathAndFileName;
-					final FileSaver targetFile = new FileSaver(target);
-					final String targetPathAndFileName = IJ.getDirectory("temp") + UUID.randomUUID().toString() + target.getTitle();
-					targetFile.saveAsTiff(targetPathAndFileName);
-					CtargetPathAndFileName = targetPathAndFileName;
-					String fileAssignments = " -file " + sourcePathAndFileName
+					CsourcePathAndFileName = saveTempImageFile( source );
+					CtargetPathAndFileName = saveTempImageFile( target );
+   /*                 final FileSaver sourceFile = new FileSaver(source);*/
+					//final String sourcePathAndFileName = IJ.getDirectory("temp") + UUID.randomUUID().toString() + source.getTitle();
+					//sourceFile.saveAsTiff(sourcePathAndFileName);
+					/*CsourcePathAndFileName = sourcePathAndFileName;*/
+   /*                 final FileSaver targetFile = new FileSaver(target);*/
+					//final String targetPathAndFileName = IJ.getDirectory("temp") + UUID.randomUUID().toString() + target.getTitle();
+					//targetFile.saveAsTiff(targetPathAndFileName);
+					/*CtargetPathAndFileName = targetPathAndFileName;*/
+					String fileAssignments = " -file " + CsourcePathAndFileName
 						+ " 0 0 " + (width - 1) + " " + (height - 1)
-						+ " -file " + targetPathAndFileName
+						+ " -file " + CtargetPathAndFileName
 						+ " 0 0 " + (width - 1) + " " + (height - 1);
 					String turboRegSourcePoints = "";
 					// if there is no transformation file specified, a transformation matrix should be computed. 
@@ -1872,7 +1874,9 @@ public class MultiStackReg_
 						method = turboReg.getClass().getMethod("getTargetPoints", null);
 						targetPoints = ((double[][])method.invoke(turboReg, null));
 						if (saveTransform) appendTransform(savePath+saveFile, s, tSlice,sourcePoints,targetPoints, transformation);
-					}else{
+
+					} else {
+						
 						//if we've specified a transformation to load, we needen't bother with aligning them again
 						sourcePoints=new double[3][2];
 						targetPoints=new double[3][2];
@@ -1998,7 +2002,7 @@ public class MultiStackReg_
 						case ImagePlus.GRAY16:
 						case ImagePlus.GRAY32: 
 							{
-								CsourcePathAndFileName = saveTempImageFile(source);
+								//CsourcePathAndFileName = saveTempImageFile(source);
 								Object turboRegGR = doTurboReg(CsourcePathAndFileName, sourcePointsText);
 
 								method = turboRegGR.getClass().getMethod("getTransformedImage", null);
