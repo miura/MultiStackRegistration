@@ -20,7 +20,7 @@
 
 	<groupId>de.embl.cmci</groupId>
 	<artifactId>MultiStackRegistration_</artifactId>
-	<version>1.46.3</version>
+	<version>1.46.4</version>
 
 	<name>plugins/MultiStackRegistration_.jar</name>
 	<description>A Maven project implementing an ImageJ 1.x plugin. MultiStackRegistration plugin written by Brad Busse.</description>
