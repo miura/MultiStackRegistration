@@ -5,13 +5,18 @@
 	http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
+	<!--<parent>-->
+		<!--<groupId>net.imagej</groupId>-->
+		<!--<artifactId>pom-imagej</artifactId>-->
+		<!--<version>16.6.0</version>-->
+		<!--<relativePath />		-->
+	<!--</parent>-->
 	<parent>
-		<groupId>net.imagej</groupId>
-		<artifactId>pom-imagej</artifactId>
-		<version>16.6.0</version>
-		<relativePath />		
+		<groupId>org.scijava</groupId>
+		<artifactId>pom-scijava</artifactId>
+        <version>26.0.0-SNAPSHOT</version>
+		<relativePath />
 	</parent>
-
 
 	<groupId>de.embl.cmci</groupId>
 	<artifactId>MultiStackRegistration_</artifactId>
@@ -19,6 +24,19 @@
 
 	<name>plugins/MultiStackRegistration_.jar</name>
 	<description>A Maven project implementing an ImageJ 1.x plugin. MultiStackRegistration plugin written by Brad Busse.</description>
+    <url>https://github.com/miura/MultiStackRegistration</url>
+    <inceptionYear>2010</inceptionYear>
+	<organization>
+		<name>Fiji</name>
+		<url>https://fiji.sc</url>
+    </organization>
+	<licenses>
+		<license>
+            <name>None</name>
+			<!--<name>GNU General Public License v3+</name>-->
+			<!--<url>https://www.gnu.org/licenses/gpl.html</url>-->
+		</license>
+	</licenses>    
 	<scm>
 		<connection>scm:git:git://github.com/cmci/MultiStackRegistration</connection>
 		<developerConnection>scm:git:git@github.com:cmci/MultiStackRegistration</developerConnection>
@@ -29,9 +47,7 @@
 		<system>GitHub Issues</system>
 		<url>https://github.com/cmci/MultiStackRegistration/issues</url>
 	</issueManagement>
-	<properties>
-		<scijava.jvm.version>1.8</scijava.jvm.version>
-	</properties>	
+		
 	<dependencies>
 		<dependency>
 			<groupId>net.imagej</groupId>
@@ -40,7 +56,8 @@
 		<dependency>
 			<groupId>sc.fiji</groupId>
 			<artifactId>TurboReg_</artifactId>
-			<version>2.0.1-SNAPSHOT</version>
+			<!--<version>2.0.1-SNAPSHOT</version>-->
+			<version>2.0.0</version>
 		</dependency>
 	</dependencies>
 
@@ -97,12 +114,33 @@
 			<organization>EMBL Heidelberg</organization>
 			<organizationUrl>http://www.embl.de/</organizationUrl>
 			<roles>
-				<role>contributor</role>
+				<role>developer</role>
 			</roles>
 			<timezone>+1</timezone>
 		</developer>
 	</developers>
-	<repositories>
+    <contributors>
+		<contributor>
+			<name>None</name>
+		</contributor>        
+    </contributors>
+	<mailingLists>
+		<mailingList>
+			<name>Image.sc Forum</name>
+			<archive>https://forum.image.sc/tags/fiji</archive>
+		</mailingList>
+    </mailingLists>
+    <ciManagement>
+        <system>None</system>
+        <!--<system>Travis CI</system>-->
+        <!--<url>https://travis-ci.org/[...]</url>-->
+    </ciManagement>
+    <properties>
+        <scijava.jvm.version>1.8</scijava.jvm.version>
+		<license.licenseName>N/A</license.licenseName>
+		<license.copyrightOwners>N/A</license.copyrightOwners>
+	</properties>        
+    <repositories>
 		<!-- NB: for project parent -->
 		<repository>
 			<id>imagej.public</id>
