@@ -14,13 +14,13 @@
 	<parent>
 		<groupId>org.scijava</groupId>
 		<artifactId>pom-scijava</artifactId>
-        <version>26.0.0-SNAPSHOT</version>
+        <version>26.0.0</version>
 		<relativePath />
 	</parent>
 
 	<groupId>de.embl.cmci</groupId>
 	<artifactId>MultiStackRegistration_</artifactId>
-	<version>1.46.4</version>
+	<version>1.46.5</version>
 
 	<name>plugins/MultiStackRegistration_.jar</name>
 	<description>A Maven project implementing an ImageJ 1.x plugin. MultiStackRegistration plugin written by Brad Busse.</description>
@@ -38,16 +38,26 @@
 		</license>
 	</licenses>    
 	<scm>
-		<connection>scm:git:git://github.com/cmci/MultiStackRegistration</connection>
-		<developerConnection>scm:git:git@github.com:cmci/MultiStackRegistration</developerConnection>
+		<connection>scm:git:git://github.com/miura/MultiStackRegistration</connection>
+		<developerConnection>scm:git:git@github.com:miura/MultiStackRegistration</developerConnection>
 		<tag>HEAD</tag>
-		<url>https://github.com/cmci/MultiStackRegistration</url>
+		<url>https://github.com/miura/MultiStackRegistration</url>
 	</scm>
 	<issueManagement>
 		<system>GitHub Issues</system>
-		<url>https://github.com/cmci/MultiStackRegistration/issues</url>
+		<url>https://github.com/miura/MultiStackRegistration/issues</url>
 	</issueManagement>
-		
+    <repositories>
+		<!-- NB: for project parent -->
+<!-- 		<repository>
+			<id>imagej.public</id>
+			<url>http://maven.imagej.net/content/groups/public</url>
+		</repository> -->
+		<repository>
+			<id>scijava.public</id>
+			<url>https://maven.scijava.org/content/groups/public</url>
+		</repository>		
+	</repositories>		
 	<dependencies>
 		<dependency>
 			<groupId>net.imagej</groupId>
@@ -56,8 +66,7 @@
 		<dependency>
 			<groupId>sc.fiji</groupId>
 			<artifactId>TurboReg_</artifactId>
-			<!--<version>2.0.1-SNAPSHOT</version>-->
-			<version>2.0.0</version>
+            <version>2.0.0</version>
 		</dependency>
 	</dependencies>
 
@@ -136,15 +145,10 @@
         <!--<url>https://travis-ci.org/[...]</url>-->
     </ciManagement>
     <properties>
+		  <enforcer.skip>true</enforcer.skip>
         <scijava.jvm.version>1.8</scijava.jvm.version>
 		<license.licenseName>N/A</license.licenseName>
 		<license.copyrightOwners>N/A</license.copyrightOwners>
 	</properties>        
-    <repositories>
-		<!-- NB: for project parent -->
-		<repository>
-			<id>imagej.public</id>
-			<url>http://maven.imagej.net/content/groups/public</url>
-		</repository>
-	</repositories>
+
 </project>
