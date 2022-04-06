@@ -17,6 +17,7 @@ Modified version of MultiStackRegistration, for use from scripts.
   * <http://imagej.org> 
 * TurboReg (Bundled in Fiji)
   * <http://bigwww.epfl.ch/thevenaz/turboreg/>
+  * TurboReg is included in the UpdateSite package from "BIG_EPFL", so you can simply add the site to your Fiji installation.
 
 ## Usage
 
@@ -43,6 +44,14 @@ Place the reference stack in Stack 1's box, and the stack to be aligned in Stack
 ### To load a transformation file:
 
 Place the stack to be aligned in either stack box, choose 'Load Transformation File' in its Action dropdown box. The File field can be used as a shortcut to avoid having to select the matrix manually.
+
+
+
+## Forum
+
+See the thread below in the Forum for discussions, macro usages, and Q&As. 
+
+https://forum.image.sc/t/multistackreg-macro/174
 
 
 
