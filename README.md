@@ -45,7 +45,9 @@ Place the reference stack in Stack 1's box, and the stack to be aligned in Stack
 
 Place the stack to be aligned in either stack box, choose 'Load Transformation File' in its Action dropdown box. The File field can be used as a shortcut to avoid having to select the matrix manually.
 
+### Javadoc
 
+http://wiki.cmci.info/javaapi/multiStackReg_/
 
 ## Forum
 
