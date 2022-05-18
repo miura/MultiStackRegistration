@@ -9,19 +9,25 @@ Modified version of MultiStackRegistration, for use from scripts.
   * bbusse@stanford.edu 
 * Kota Miura (Minor upgrades, v1.46)
   * Mavenized, Scripting enabled, bug fixing. 
-  * miura@cmci.info	
+  * miura@cmci.info    
+
+## Installation
+
+Please add the plugin "MultistackReg" using Update Sites function in Fiji. 
+
+* briefly, [help > Update...], then in the Updater window, click "Manage Update Site", and tick "MultiStackReg" (also tick "BIG_EPFL" for the dependency) - close the window, click "Apply Changes". When downloading is done, please restart Fiji. 
 
 ## Dependencies
 
 * ImageJ
   * <http://imagej.org> 
-* TurboReg (Bundled in Fiji)
+* TurboReg
   * <http://bigwww.epfl.ch/thevenaz/turboreg/>
-  * TurboReg is included in the UpdateSite package from "BIG_EPFL", so you can simply add the site to your Fiji installation.
+  * TurboReg is included in the UpdateSite package from "BIG_EPFL", so please simply add the site to your Fiji installation.
 
 ## Usage
 
-Welcome to MultiStackReg v1.4!
+Welcome to MultiStackReg v1.5!
 
 This plugin has three modes of use:
 
@@ -29,17 +35,14 @@ This plugin has three modes of use:
 2. Align a stack to another stack
 3. Load a previously created transformation file
 
-
 ### To align a single stack:
 
 Choose the image to be aligned in the Stack 1 dropdown box.
 Leave 'Align' in the Action 1 box.
 
-
 ### To align two stacks:
 
 Place the reference stack in Stack 1's box, and the stack to be aligned in Stack 2's box.  Select 'Use as Reference' as Action 1 and 'Align to First Stack' as Action 2.
-
 
 ### To load a transformation file:
 
@@ -55,10 +58,7 @@ See the thread below in the Forum for discussions, macro usages, and Q&As.
 
 https://forum.image.sc/t/multistackreg-macro/174
 
-
-
 ## Credits:
-
 
 This work is based on the following paper:
 
